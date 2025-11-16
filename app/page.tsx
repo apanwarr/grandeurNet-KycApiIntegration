@@ -17,6 +17,7 @@ export default function Home() {
   const [otpData, setOtpData] = useState({ email: "", otp: "" });
   const [loading, setLoading] = useState(false);   
   const [successPopup, setSuccessPopup] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,6 +29,7 @@ export default function Home() {
 
   const handleRegister = async (e: any) => {
     e.preventDefault();
+    setError("")
 
     if (formData?.password !== formData?.cpassword) {
       alert("Passwords do not match");
@@ -37,6 +39,7 @@ export default function Home() {
     console.log(formData, "formdata");
 
     try {
+      setLoading(true); 
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/register`,
         formData,
@@ -51,6 +54,9 @@ export default function Home() {
       setShowOTPModal(true);
     } catch (error) {
       console.log(error, "error");
+      setError("User with this email already exists")
+    } finally {
+      setLoading(false);  
     }
   };
 
@@ -118,6 +124,12 @@ export default function Home() {
               Login
             </button>
           </div>
+
+          {error && (
+              <p className="text-red-600 text-center bg-red-100 py-2 mb-1 rounded-lg">
+                  {error}
+              </p>
+          )}
 
           <div>
             <label
@@ -287,8 +299,8 @@ export default function Home() {
         </div>
       )}
 
-      {successPopup && (
-        <SuccessPopup title="Registration Successful!" message="Redirecting to login..." />
+      {loading && (
+        <SuccessPopup title="Registering New User..." message="Redirecting to login..." />
       )}
 
     </div>

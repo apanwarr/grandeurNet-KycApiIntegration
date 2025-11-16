@@ -91,12 +91,12 @@ export default function KycForm() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 p-4">
       <div className="bg-white/80 backdrop-blur-sm shadow-2xl rounded-2xl p-8 w-full max-w-4xl border border-white/20">
-        <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">
+        <h1 className="text-3xl font-bold text-center mb-5 text-gray-800">
           Business KYC Form
         </h1>
 
         {errorMessage && (
-            <p className="text-red-600 text-center bg-red-100 py-2 rounded-lg">
+            <p className="text-red-600 text-center bg-red-100 py-2 mb-1 rounded-lg">
                 {errorMessage}
             </p>
         )}
